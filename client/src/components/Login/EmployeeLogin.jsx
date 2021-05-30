@@ -1,6 +1,6 @@
 import React from 'react'
 import BgImg from '../BgImg/BgImg'
-import sideImage from '../../assests/images/user.svg'
+import sideImage from '../../assests/images/employee.svg'
 import './Login.css'
 
 
@@ -30,7 +30,7 @@ const Login = ()=>{
                             <input className="form-control" name="password" id ="password" type="password"/>
                         </div>
                         <div className="form-group d-flex justify-content-between ">
-                            <button className="btn btn-success" formAction="" type="submit">User Login</button>
+                            <button className="btn btn-success" formAction="" type="submit">Employee Login</button>
                         </div>
                     </form>
                 </div>

@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    conpassword : {
+        type:String,
+        required: true
+    },
     mobileno : {
         type:Number,
         required:true
@@ -52,17 +56,16 @@ const userSchema = new mongoose.Schema({
     }
 })
 
+
+//Here the this keyword inside the pre function refers to the document that is about to be saved
+//hashing the password
 userSchema.pre('save', async function(next){
-    const user = this
-    console.log(user)
-    // only hash the password if it has been modified (or is new)
-    if (!user.isModified('password')) {
-        return next()
-    } else {
-        encrypted_password = await bcrypt.hash(user.password, 12)
-        user.password = encrypted_password
-        next()
+    if(this.isModified('password')){
+        this.password = await bcrypt.hash(this.password,12)
+        this.conpassword = await bcrypt.hash(this.conpassword,12)
     }
+    next()
 })
 
-module.exports = userSchema
+const User = mongoose.model ('users',userSchema)
+module.exports = User

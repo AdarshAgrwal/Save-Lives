@@ -8,7 +8,7 @@ const Navbar = () => {
 
   return (
   <nav className="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
-      <div className="container-fluid" style={{background:'#212529'}}>
+      <div className="container" style={{background:'#212529'}}>
     
       <NavLink className="navbar-brand navbar-logo" to="/" exact>
         <img src={logo} alt="logo" width="40"/>
@@ -48,10 +48,20 @@ const Navbar = () => {
               </div>
             </li>
 
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <NavLink className="nav-link" to="/login" exact>
                 Login
               </NavLink>
+            </li> */}
+            <li className="nav-item dropdown">
+              <NavLink className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Login
+              </NavLink>
+              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <NavLink className="dropdown-item" exact to="/login">User Login</NavLink>
+                <div className="dropdown-divider"></div>
+                <NavLink className="dropdown-item" exact to="/employeelogin">Employee Login</NavLink>
+              </div>
             </li>
             
         </ul>

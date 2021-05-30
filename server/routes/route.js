@@ -1,7 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
-const userSchema = require('../schema/userschema')
+const User = require('../schema/userschema')
+const Employee = require('../schema/employeeschema')
 
 const router = express.Router()
 
@@ -27,39 +28,118 @@ router.get('/empregistration',(req,res)=>{
     res.send('Hello this is the employee registration Page')
 })
 
+router.get('/userlogin',(req,res)=>{
+    res.send('This is the User Login')
+})
+
+router.get('/emplogin',(req,res)=>{
+    res.send('This is the Employee Login')
+})
 //POST REQUESTS
 router.post('/userregistration', async (req,res)=>{
+    // console.log(req.body)
+    const {name , dob , gender , email , password , conpassword , mobileno , bloodgroup , lastdondate , country , state , city , aadhar} = req.body
+        
+    if (!name || !dob || !gender || !email || !password || !conpassword || !mobileno || !bloodgroup || !lastdondate || !country || !state || !city || !aadhar){
+        console.log("Please Fill all the fields")
+        res.status(422).json({err : "Please Fill all the fields"})
+    }
+
     try{
-        // console.log(req.body)
-        const {name , dob , gender , email , password , conpassword , mobileno , bloodgroup , lastdondate , country , state , city , aadhar} = req.body
-        
-        if (!name || !dob || !gender || !email || !password || !conpassword || !mobileno || !bloodgroup || !lastdondate || !country || !state || !city || !aadhar){
-            console.log("Please Fill all the fields")
-            res.status(422).json({err : "Please Fill all the fields"})
+        const userExists  = await User.findOne({email:email})
+        if(userExists){
+            console.log('Email Already Exists')
+            res.status(422).json({err : "User Already Exists"})
         }
-        //Model Prepared
-        const Users = mongoose.model('users', userSchema);
-        //Finding the User in the Collection through the defined model
-        const userData = await Users.findOne({email:email})
-        
-        if (userData){
-            console.log("Email Already Exists")
-            res.status(400).json({err: "Email Already Exists"})
-        }
-        else{
-            const User = new Users({name , dob , gender , email , password , conpassword , mobileno , bloodgroup , lastdondate , country , state , city , aadhar})
-            const isMatch = await bcrypt.compare(conpassword, password)
-            if(!isMatch){
-                console.log("invalid Details")
-                res.status(400).json({err:"Invalid Details"})
-                console.log(conpassword , password , isMatch)
-            }else{
-                User.save()
-                res.status(200).json({message: "Data Saved Successfully in the Database"})
+        if (password != conpassword) {
+            console.log('Invalid Credentials')
+            res.status(402).json({err : "Invalid Credentials"})
+        }else{
+            const user = new User({name , dob , gender , email , password , conpassword , mobileno , bloodgroup , lastdondate , country , state , city , aadhar})
+            //Yahan Par we are getting the data first and then we are calling the save method uske beech main 
+            //we need some method to hash the password so we will use userSchema.pre('save',function(){})
+            const userRegistered =  await user.save()
+
+            if(userRegistered){
+                res.status(201).json({message : 'Data Sent Successfully to Database'})
             }
         }
     }catch (err){
         console.log(err)
+    }
+})
+
+router.post('/empregistration',async (req,res)=>{
+    const {name,dob ,gender,email,password,conpassword,mobileno,aadhar,country,state,city} = req.body
+    if (!name || !dob || !gender || !email || !password || !conpassword || !mobileno || !aadhar || !country || !state || !city  ){
+        console.log("Please Fill all the fields")
+        res.status(422).json({err : "Please Fill all the fields"})
+    }
+    try{
+        const employeeExists = await Employee.findOne({email:email})
+        if(employeeExists){
+            console.log('Email Already Exists')
+            res.status(422).json({err : "User Already Exists"})
+        }
+        if (password != conpassword) {
+            console.log('Invalid Credentials')
+            res.status(402).json({err : "Invalid Credentials"})
+        }else{
+            const employee = new Employee({name , dob , gender , email , password , conpassword , mobileno, aadhar , country , state , city })
+            //Yahan Par we are getting the data first and then we are calling the save method uske beech main 
+            //we need some method to hash the password so we will use userSchema.pre('save',function(){})
+            const employeeRegistered =  await employee.save()
+
+            if(employeeRegistered){
+                console.log("Data Sent Successfully")
+                res.status(201).json({message : 'Data Sent Successfully to Database'})
+            }
+        }
+    }catch(err){
+        console.log(err)
+    }
+})
+
+router.post('/userlogin', async (req,res)=>{
+    const {email,password} = req.body
+    
+    try{
+        const userExists = await User.findOne({email:email}) 
+        if(userExists){
+            const isMatch = await bcrypt.compare(password,userExists.password)
+            if(isMatch){
+                console.log("Login Successfully")
+                res.status(200).json({message : "Logged in Successfully"})
+            }else{
+                console.log("Login Unsuccessful")
+                res.status(400).json({message: "Incorrect Credentials"})
+            }
+        }       
+    }catch(err){
+        console.log(err)
+        res.json({err:"Some Error Occured"})
+    }
+})
+
+router.post('/emplogin', async (req,res)=>{
+    const {email,password}=req.body
+
+    try{
+        const empExists = await Employee.findOne({email:email})
+        if(empExists){
+            console.log(empExists.password , password)
+            const isMatch = await bcrypt.compare(password, empExists.password)
+            if(isMatch){
+                console.log("Login Successfully")
+                res.status(200).json({message:"Logged in Successfully"})
+            }else{
+                console.log("Login Unsuccessful")
+                res.status(400).json({message:"Incorrect Credentials"})
+            }
+        }
+    } catch (err) {
+        console.log(err)
+        res.json({err:"Some Error Occured"})
     }
 })
 

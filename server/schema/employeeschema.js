@@ -30,12 +30,8 @@ const employeeSchema = new mongoose.Schema({
         type:Number,
         required:true
     },
-    bloodgroup : {
+    aadhar : {
         type:String,
-        required:true
-    },
-    lastdondate : {
-        type:Date,
         required:true
     },
     country : {
@@ -49,11 +45,15 @@ const employeeSchema = new mongoose.Schema({
     city : {
         type:String,
         required:true
-    },
-    aadhar : {
-        type:String,
-        required:true
     }
 })
+employeeSchema.pre('save', async function(next){
+    if(this.isModified('password')){
+        this.password = await bcrypt.hash(this.password,12)
+        this.conpassword = await bcrypt.hash(this.conpassword,12)
+    }
+    next()
+})
+const Employee = mongoose.model('employees',employeeSchema)
 
-module.exports = employeeSchema
+module.exports = Employee
