@@ -1,0 +1,12 @@
+.services-section {
+    background: linear-gradient( to top , #F0F0F0 , #fff );
+}
+
+.spacing{
+    padding-bottom: 10%;
+    padding-top: 7%
+}
+
+.card {
+    margin:5%
+}

@@ -1,0 +1,44 @@
+.backgroundImg{
+    background: url('../../assests/images/background.jpg');
+    background-position:center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+} 
+
+.contain{
+    display: flex;
+    flex-direction: column;
+}
+
+.text1 {
+    color: #ff7b54;
+    text-transform : uppercase;
+    font-family: 'Cabin Sketch', cursive;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.text1 h1{
+    text-shadow: 2px 2px white;
+    font-size: 300%;
+}
+
+.img1{
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.img1 img{
+    margin: 5%;
+}
+
+@media only screen and (max-width:1024px){
+    /* .backgroundImg{
+        height:80vh
+    } */
+}

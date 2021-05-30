@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@700&display=swap');
+
+.background-img{
+    background: url('../../assests/images/bg_1.jpg');
+    height: 80vh;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    top:0px;
+    background-attachment: fixed;
+}
+
+.overlay{
+    background : rgb(0, 0, 0,0.1);
+    background-size: cover;
+    height: 80vh;
+}
+
+.text {
+    color: #ff7b54;
+    text-transform : uppercase;
+    font-family: 'Cabin Sketch', cursive;
+    font-weight: bold;
+    display:flex;
+    align-items: center; 
+    justify-content: space-between;
+    height: 80vh;
+}
+
+.centerDiv{
+    width: 50%;
+    margin: auto;
+    text-align: center;
+}
+
+.text h1{
+    text-shadow: 2px 2px white;
+    font-size: 300%;
+}
+
+#home { 
+    padding-top: 7%;
+    padding-bottom: 7%;
+    background: linear-gradient( to right , #F0F0F0 , #fff );
+}
+
+.box1 {
+    background: #ff7b54;
+}
+
+.box2{
+    background: #ffb26b;
+}
+
+.box3 {
+    background: #ffd56b;
+}
+
+#home h3{
+    font-family: 'Cabin Sketch', cursive;
+    font-size: 230%;
+    margin-bottom: 1.5rem;
+}
+
+#home .m-4 p {
+    letter-spacing: 0.5px;
+    margin-top: 0px;
+    margin-bottom: 1rem;
+    font-size: 130%;
+}
+
+.btn{
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 20px -5px;
+}
+
+.btn.btn-white {
+    color: rgb(0, 0, 0);
+    background: rgb(255, 255, 255);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(255, 255, 255);
+    border-image: initial;
+    border-radius: 5px;
+}
+
+.secondrow {
+    margin-top: 3%
+}
+
+.secondrow i {
+    color:#ffb26b;
+    font-size: 250%;
+    line-height: 1;
+}
+
+.secondrow p{
+    margin-left: 5%;
+    font-size: 110%;
+}
+
+.secondrow h4{
+    font-family: 'Cabin Sketch', cursive;
+    font-size: 170%
+}
+
+.third-row{
+    margin-top: 7%;
+}
+
+.form-parent {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-box{
+    flex-grow: 1;
+
+}
+
+.form-group{
+    margin-top: 2.5%;
+}
+
+@media only screen and (min-width:1024px){
+    .form-parent {
+        position: relative;
+        top: 50px;
+    }
+}

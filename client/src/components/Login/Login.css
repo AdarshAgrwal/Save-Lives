@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@700&display=swap');
+
+.login-section{
+    padding-top:7%;
+    padding-bottom:10%;
+    background: linear-gradient( to top , #F0F0F0 , #fff );;
+}
+
+h3{
+    font-family: 'Cabin Sketch', cursive;
+    font-size: 230%;
+    margin-bottom: 1.5rem;
+    color:#ffb26b;
+}
+
+.form-group{
+    margin-top: 5%;
+}
+
+.text-box{
+    padding:5%
+}
+
+p{
+    font-size: medium;
+}
+
+@media only screen and (max-width:767px){
+    .login-section{
+        padding-bottom: 20%;
+    }
+}
