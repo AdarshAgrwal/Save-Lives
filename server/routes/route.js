@@ -1,5 +1,5 @@
 const express = require('express')
-const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const User = require('../schema/userschema')
 const Employee = require('../schema/employeeschema')
@@ -107,6 +107,18 @@ router.post('/userlogin', async (req,res)=>{
         const userExists = await User.findOne({email:email}) 
         if(userExists){
             const isMatch = await bcrypt.compare(password,userExists.password)
+
+            const token = await userExists.generateAuthToken()
+            console.log(token)
+
+            //Storing the token in the cookie 
+            // res.cookie("name of the cookie" , value in the cookies , {expires: new Date (Date.now +25892000000)})
+            
+            res.cookie("jwtoken",token,{
+                expires : new Date (Date.now() + 25892000000),
+                httpOnly : true
+            })
+
             if(isMatch){
                 console.log("Login Successfully")
                 res.status(200).json({message : "Logged in Successfully"})

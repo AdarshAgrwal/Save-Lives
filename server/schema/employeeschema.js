@@ -54,6 +54,8 @@ employeeSchema.pre('save', async function(next){
     }
     next()
 })
+
+
 const Employee = mongoose.model('employees',employeeSchema)
 
 module.exports = Employee
