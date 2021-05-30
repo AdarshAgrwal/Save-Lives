@@ -66,25 +66,10 @@ const RegisterEmployee = ()=>{
                                     <input type="text" className="form-control" id="mobileno" name="mobileno" required placeholder="1234567891"/>
                                 </div>
                             </div>
-                            <div className="col-lg-4">
+                            <div className="col-lg-8">
                                 <div className="form-group">
-                                    <label class="form-control-label" htmlFor="bloodgroup">Blood Group</label>
-                                    <br/>
-                                    <select name="bloodgroup" className="form-control" id="bloodgroup" required>
-                                        <option value="A+">A+</option>
-                                        <option value="A-">A-</option>
-                                        <option value="B+">B+</option>
-                                        <option value="O+">O+</option>
-                                        <option value="O-">O-</option>
-                                        <option value="AB+">AB+</option>
-                                        <option value="AB-">AB-</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="col-lg-4">
-                                <div className="form-group">
-                                    <label className="form-control-label" htmlFor="lastdondate">Last Date of Donation</label>
-                                    <input type="date" className="form-control" id="lastdondate" name="lastdondate" required />
+                                    <label htmlFor = "aadharCard" className="form-control-label">Aadhar Card</label>
+                                    <input type="file" className="form-control" placeholder ="Upload the Document" name="aadhar"></input>
                                 </div>
                             </div>
                         </div>
@@ -123,15 +108,7 @@ const RegisterEmployee = ()=>{
                             </div>
                         </div>
 
-                        <div className = "row">
-                            <div className="col-lg-6">
-                                <div className="form-group">
-                                    <label htmlFor = "aadharCard" className="form-control-label">Aadhar Card</label>
-                                    <input type="file" className="form-control" placeholder ="Upload the Document" name="aadhar"></input>
-                                </div>
-                            </div>
-                        </div>
-
+                        
                         <button type="submit" className="btn btn-success" formAction="">Submit</button>
                     </form>
                 </div>

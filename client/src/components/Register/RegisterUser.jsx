@@ -13,7 +13,12 @@ const Register = ()=>{
                     <form>
                     <h3><center>Register</center></h3>
                         <div className="row">
-                            <div className ="col-lg-4">
+                        <div className="col-lg-6">
+                                <div className="form-group">
+                                    <label htmlFor = "aadharCard" className="form-control-label">Aadhar Card</label>
+                                    <input type="file" className="form-control" placeholder ="Upload the Document" name="aadhar"></input>
+                                </div>
+                            </div>          <div className ="col-lg-4">
                                 <div className="form-group">
                                     <label className="form-control-label" htmlFor="name"> Name</label>
                                     <input type="text" className="form-control" id="name" name="name" placeholder="Jane Doe" required/>
@@ -114,7 +119,7 @@ const Register = ()=>{
                             </div>
                             <div className="col-lg-4">
                                 <div className="form-group">
-                                    <label htmlFor="City">City</label>
+                                    <label htmlFor="city">City</label>
                                     <select name="city" id='city' className="form-control" required>
                                     <option value = "">Choose a City</option>
 

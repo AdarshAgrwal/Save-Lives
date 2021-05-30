@@ -31,8 +31,8 @@ const Footer = ()=>{
                 </section>
             </div>
             <div className="text-center p-3" style={{backgroundColor: 'rgba(0, 0, 0, 0.2)'}}>
-                © 2020 Copyright:
-                <a className="text-white text-decoration-none " href="#"> Adarsh Agarwal</a>
+                © 2020 Copyright: 
+                <NavLink className="text-white text-decoration-none " to="/" exact> Adarsh Agarwal & Krettika Varshney</NavLink>
             </div>
             
         </footer>
