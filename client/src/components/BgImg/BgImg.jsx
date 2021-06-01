@@ -1,4 +1,3 @@
-import react from 'react'
 import './BgImg.css'
 
 const BgImg = (props)=>{

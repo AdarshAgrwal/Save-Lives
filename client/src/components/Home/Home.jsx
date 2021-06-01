@@ -1,8 +1,46 @@
-import React from 'react'
+import React, {useState} from 'react'
+import {useHistory} from 'react-router-dom'
 import './Home.css'
 import textImage from '../../assests/images/new-message-animate.svg'
 
 const Home = ()=>{
+    const history = useHistory()
+    const [contact , setContact] = useState({name:"",email:"",message:""})
+
+    let name , value ;
+    const handleInputs = (e)=>{
+        name = e.target.name
+        value = e.target.value
+        
+        setContact({...contact , [name]:value})
+    }
+
+    const postData = async (e)=>{
+        e.preventDefault()
+
+        const {name , email , message} = contact
+
+        const res = await fetch('/',{
+            method:"POST",
+            headers:{
+                "Content-Type" : "application/json"
+            },
+            body:JSON.stringify({name , email , message})
+        })
+
+        const data = await res.json()
+
+        if(data.status === 422 || !data){
+            window.alert("INvalid Contact")
+            console.log('INvalid Contact')
+        }else{
+            window.alert("Data Sent Successfully")
+            console.log('Data Sent Successfully')
+
+            history.push('/')
+        }
+    }
+
     return (
         <>
         <div className="col-12">
@@ -73,21 +111,21 @@ const Home = ()=>{
                     <div className="col-md-6 form-parent">
                     <h3>  <center>Send Me a Message</center></h3>
                         <div className="form-box">
-                            <form >
+                            <form method = "POST">
                                 <div className= "form-group">
                                     <label htmlFor="name">Name</label>
-                                    <input id="name" name="name" type="text" className="form-control" required />
+                                    <input id="name" name="name" type="text" className="form-control" value={contact.name} onChange={handleInputs} placeholder="Jane Doe"  required />
                                 </div>  
                                 <div className= "form-group">
                                     <label htmlFor="email">Email</label>
-                                    <input id="email" name="email" type="text" className="form-control" required />
+                                    <input id="email" name="email" type="text" className="form-control" value={contact.email} onChange={handleInputs} placeholder="xyz@gmail.com" required />
                                 </div>  
                                 <div className= "form-group">
                                     <label htmlFor="message">Message</label>
-                                    <textarea rows="5" cols="30" className="form-control" id="message"></textarea>
+                                    <textarea rows="5" cols="30" className="form-control" id="message" value={contact.message} onChange={handleInputs} placeholder="Type your message here" name="message"></textarea>
                                 </div>
                                 <div className="form-group">
-                                    <button type="submit" className="btn btn-success" > Submit</button>
+                                    <button type="submit" className="btn btn-success" onClick={postData} > Submit</button>
                                 </div>
                             </form>
                         </div>

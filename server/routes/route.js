@@ -3,13 +3,14 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const User = require('../schema/userschema')
 const Employee = require('../schema/employeeschema')
+const Contact = require('../schema/contactUs')
 
 const router = express.Router()
 
 //Getting the routes
 router.get('/',(req,res)=>{
     res.send('Hello I am Home')
-    console.log('Hellow Home page')
+    console.log('Hello Home page')
 })
 
 router.get('/services',(req,res)=>{
@@ -35,7 +36,50 @@ router.get('/userlogin',(req,res)=>{
 router.get('/emplogin',(req,res)=>{
     res.send('This is the Employee Login')
 })
+
 //POST REQUESTS
+
+//HANDLING CONTACT US REQUEST
+router.post('/',async(req,res)=>{
+    const {name , email ,message} = req.body
+
+    try{
+        const UserExists = await Contact.findOne({email:email})
+
+        if(UserExists){
+            UserExists.message = message ;
+            const updated = await UserExists.save()
+
+            if(updated){
+                console.log("Document Successfully Updated")
+                res.status(200).json({message:"Document Successfully Updated"})
+            }else{
+                console.log("Document was not Updated")
+                res.status(422).json({message:"Document was not Updated"})
+            }
+
+        }else{
+            const contact = new Contact({name , email ,message})
+
+            const saved = await contact.save()
+
+            if (saved){
+                console.log("Data Saved Successfully")
+                res.status(200).json({message : "Data Saved Sucessfully"})
+            }else{
+                console.log("Data Could Not be Saved")
+                res.status(422).json({err : "Data could not be Saved"})
+            }
+        }
+    }
+    catch(err){
+        console.log("Some Error Occured")
+        res.status(400).json({err:err})
+    }
+})
+
+
+//Handling User Registration
 router.post('/userregistration', async (req,res)=>{
     // console.log(req.body)
     const {name , dob , gender , email , password , conpassword , mobileno , bloodgroup , lastdondate , country , state , city , aadhar} = req.body
@@ -69,8 +113,11 @@ router.post('/userregistration', async (req,res)=>{
     }
 })
 
+
+//Handling Employee Registration
 router.post('/empregistration',async (req,res)=>{
     const {name,dob ,gender,email,password,conpassword,mobileno,aadhar,country,state,city} = req.body
+    console.log(req.body)
     if (!name || !dob || !gender || !email || !password || !conpassword || !mobileno || !aadhar || !country || !state || !city  ){
         console.log("Please Fill all the fields")
         res.status(422).json({err : "Please Fill all the fields"})
@@ -83,7 +130,7 @@ router.post('/empregistration',async (req,res)=>{
         }
         if (password != conpassword) {
             console.log('Invalid Credentials')
-            res.status(402).json({err : "Invalid Credentials"})
+            res.status(422).json({err : "Invalid Credentials"})
         }else{
             const employee = new Employee({name , dob , gender , email , password , conpassword , mobileno, aadhar , country , state , city })
             //Yahan Par we are getting the data first and then we are calling the save method uske beech main 
@@ -100,6 +147,8 @@ router.post('/empregistration',async (req,res)=>{
     }
 })
 
+
+//Handling User Login
 router.post('/userlogin', async (req,res)=>{
     const {email,password} = req.body
     
@@ -133,6 +182,8 @@ router.post('/userlogin', async (req,res)=>{
     }
 })
 
+
+//Handling Employee Login 
 router.post('/emplogin', async (req,res)=>{
     const {email,password}=req.body
 
@@ -141,6 +192,16 @@ router.post('/emplogin', async (req,res)=>{
         if(empExists){
             console.log(empExists.password , password)
             const isMatch = await bcrypt.compare(password, empExists.password)
+
+            const emp_token = await empExists.generateAuthToken()
+            console.log(emp_token)
+
+            //STORING THE TOKEN IN THE COOKIE
+            res.cookie("EMPCOOKIE", emp_token , {
+                expires: new Date (Date.now() + 25892000000),
+                httpOnly : true
+            })
+
             if(isMatch){
                 console.log("Login Successfully")
                 res.status(200).json({message:"Logged in Successfully"})
