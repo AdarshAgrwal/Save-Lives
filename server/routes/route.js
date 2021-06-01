@@ -97,7 +97,7 @@ router.post('/userregistration', async (req,res)=>{
         }
         if (password != conpassword) {
             console.log('Invalid Credentials')
-            res.status(402).json({err : "Invalid Credentials"})
+            res.status(422).json({err : "Invalid Credentials"})
         }else{
             const user = new User({name , dob , gender , email , password , conpassword , mobileno , bloodgroup , lastdondate , country , state , city , aadhar})
             //Yahan Par we are getting the data first and then we are calling the save method uske beech main 
