@@ -1,11 +1,10 @@
 import React, {useState} from 'react'
-import {useHistory} from 'react-router-dom'
 import './Home.css'
 import textImage from '../../assests/images/new-message-animate.svg'
 
 const Home = ()=>{
-    const history = useHistory()
     const [contact , setContact] = useState({name:"",email:"",message:""})
+
 
     let name , value ;
     const handleInputs = (e)=>{
@@ -37,7 +36,7 @@ const Home = ()=>{
             window.alert("Data Sent Successfully")
             console.log('Data Sent Successfully')
 
-            history.push('/')
+            setContact({name:"",email:"",message:""})
         }
     }
 

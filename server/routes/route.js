@@ -5,6 +5,9 @@ const User = require('../schema/userschema')
 const Employee = require('../schema/employeeschema')
 const Contact = require('../schema/contactUs')
 
+//acquiring middlewares
+const authenticate = require('../middleware/authenticate')
+
 const router = express.Router()
 
 //Getting the routes
@@ -35,6 +38,10 @@ router.get('/userlogin',(req,res)=>{
 
 router.get('/emplogin',(req,res)=>{
     res.send('This is the Employee Login')
+})
+
+router.get('/userdashboard',authenticate,(req,res)=>{
+    console.log("hello I am the Dashboard of the user")
 })
 
 //POST REQUESTS
@@ -151,6 +158,12 @@ router.post('/empregistration',async (req,res)=>{
 //Handling User Login
 router.post('/userlogin', async (req,res)=>{
     const {email,password} = req.body
+    console.log(req.body)
+
+    if(!email || !password) {
+        console.log("Please fill all fields")
+        res.status(400).json({err:"Please fill all the fields"})
+    }
     
     try{
         const userExists = await User.findOne({email:email}) 
@@ -163,7 +176,7 @@ router.post('/userlogin', async (req,res)=>{
             //Storing the token in the cookie 
             // res.cookie("name of the cookie" , value in the cookies , {expires: new Date (Date.now +25892000000)})
             
-            res.cookie("jwtoken",token,{
+            res.cookie("USERCOOKIE",token,{
                 expires : new Date (Date.now() + 25892000000),
                 httpOnly : true
             })
@@ -173,9 +186,12 @@ router.post('/userlogin', async (req,res)=>{
                 res.status(200).json({message : "Logged in Successfully"})
             }else{
                 console.log("Login Unsuccessful")
-                res.status(400).json({message: "Incorrect Credentials"})
+                res.status(400).json({err : "Incorrect Credentials"})
             }
-        }       
+        }else{
+            res.status(400).json({err :"User Not Found"})
+            console.log("User Not Found")
+        }
     }catch(err){
         console.log(err)
         res.json({err:"Some Error Occured"})
@@ -186,6 +202,11 @@ router.post('/userlogin', async (req,res)=>{
 //Handling Employee Login 
 router.post('/emplogin', async (req,res)=>{
     const {email,password}=req.body
+
+    if(!email || !password) {
+        console.log("Please fill all fields")
+        res.status(400).json({err:"Please fill all the fields"})
+    }
 
     try{
         const empExists = await Employee.findOne({email:email})
