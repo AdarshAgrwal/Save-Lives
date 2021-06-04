@@ -6,10 +6,11 @@ const authenticate = async (req,res,next) =>{
         //getting back the token which was earlier saved in our cookie
 
         const token = req.cookie.USERCOOKIE;
+        console.log(token)
         const verifyToken = jwt.verify(token,process.env.SECRET_ACCESS_TOKEN)
         console.log(verifyToken)
 
-        const user = await User.findOne ({_id : verifyToken._id, "tokens:token":token })
+        const user = await User.findOne ({_id : verifyToken._id, "tokens.token":token })
 
         if(!user){throw new Error('User not Found')}
         

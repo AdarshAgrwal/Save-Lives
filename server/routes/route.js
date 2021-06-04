@@ -41,7 +41,7 @@ router.get('/emplogin',(req,res)=>{
 })
 
 router.get('/userdashboard',authenticate,(req,res)=>{
-    console.log("hello I am the Dashboard of the user")
+    res.send(req.user) //this req.user is being defined in out authenticate 
 })
 
 //POST REQUESTS

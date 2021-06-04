@@ -9,6 +9,8 @@ import RegisterUser from './components/Register/RegisterUser'
 import RegisterEmployee from './components/Register/RegisterEmployee'
 import Services from './components/Services/Services'
 import Footer from './components/Footer/Footer'
+import Empdashboard from './components/dashboards/empdashboard'
+import Userdashboard from './components/dashboards/userdashboard'
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route path="/Services" exact component={Services} /> 
         <Route path="/RegisterUser" exact component={RegisterUser} /> 
         <Route path="/RegisterEmployee" exact component={RegisterEmployee} /> 
+        <Route path="/empdashboard" exact component={Empdashboard} /> 
+        <Route path="/userdashboard" exact component={Userdashboard} /> 
       </Switch>
     <Footer/>
     </>

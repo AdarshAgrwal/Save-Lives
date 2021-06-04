@@ -30,7 +30,7 @@ const Login = ()=>{
             console.log("Login Successfull")
             window.alert("Successfully Logged in")
 
-            history.push('/')
+            history.push('/userdashboard')
         }
     }
     
