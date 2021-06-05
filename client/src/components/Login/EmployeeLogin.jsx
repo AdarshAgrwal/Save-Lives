@@ -10,7 +10,8 @@ const Login = ()=>{
     const [email , setEmpEmail] = useState("")
     const [password , setEmpPass] = useState("")
 
-    const postData = async () => {
+    const postData = async (e) => {
+        e.preventDefault()
         const res = await fetch ('/emplogin' , {
             method : "POST",
             headers : {
@@ -57,7 +58,7 @@ const Login = ()=>{
                             <input value={password} onChange={(e)=>{setEmpPass(e.target.value)}} className="form-control" name="password" id ="password" type="password"/>
                         </div>
                         <div className="form-group d-flex justify-content-between ">
-                            <button className="btn btn-success" formAction="" type="submit" onClick={postData}>Employee Login</button>
+                            <button className="btn btn-success" type="submit" onClick={postData}>Employee Login</button>
                         </div>
                     </form>
                 </div>

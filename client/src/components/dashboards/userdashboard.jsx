@@ -1,6 +1,6 @@
 import React,{useEffect} from 'react'
 import {useHistory} from 'react-router-dom'
-
+import './dashboard.css';
 const Userdashboard = () => {
     const history = useHistory()
     const callAboutPage = async ()=>{
@@ -44,7 +44,22 @@ const Userdashboard = () => {
 
     return (
         <>
-            <h1> Hello I am the Dash Board</h1>            
+            <div id="dashboard">
+             <div className="row">
+                <div className="col-12 col-sm-4 info">
+                    <h1>Personal Info</h1>
+
+                </div>
+                    <div className="col-12 col-sm-4">
+                        <div className="card">
+                            <div className="card-body">
+                                
+                            </div>
+                        </div>
+
+                </div>
+             </div>
+            </div>     
         </>
     )
 }
