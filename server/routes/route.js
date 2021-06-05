@@ -187,7 +187,8 @@ router.post('/userlogin', async (req,res)=>{
 
             if(isMatch){
                 console.log("Login Successfully")
-                res.status(200).json({message : "Logged in Successfully"})
+                res.status(200).json({ message: "Logged in Successfully" })
+                
             }else{
                 console.log("Login Unsuccessful")
                 res.status(400).json({err : "Incorrect Credentials"})
