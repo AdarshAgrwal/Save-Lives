@@ -1,10 +1,37 @@
-import React from 'react'
+import React,{useState} from 'react'
+import {useHistory} from 'react-router-dom'
 import BgImg from '../BgImg/BgImg'
 import sideImage from '../../assests/images/employee.svg'
 import './Login.css'
 
 
 const Login = ()=>{
+    const history = useHistory()
+    const [email , setEmpEmail] = useState("")
+    const [password , setEmpPass] = useState("")
+
+    const postData = async () => {
+        const res = await fetch ('/emplogin' , {
+            method : "POST",
+            headers : {
+                "Content-Type":"application/json"
+            },
+            body : JSON.stringify({email , password})
+        })
+
+        const data = res.json()
+        console.log(data)
+
+        if (res.status === 400){
+            console.log("Login Unsuccessfull")
+            window.alert("Login Unsuccessfull")
+        }else{
+            alert("Login Successfull")
+            console.log("Login Successfull")
+            history.push('/empdashboard')
+        }
+    }
+
     return (
         <>
         <BgImg line1="Welcome" line2="Login" image={sideImage}/>
@@ -23,14 +50,14 @@ const Login = ()=>{
                     <h3 id="remove"> <center>Login Form</center></h3>
                         <div className="form-group">
                             <label htmlFor="email">Email</label>
-                            <input className="form-control" name="email" id ="email" type="text"/>
+                            <input value={email} onChange={(e)=>{setEmpEmail(e.target.value)}} className="form-control" name="email" id ="email" type="text"/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="password">Password</label>
-                            <input className="form-control" name="password" id ="password" type="password"/>
+                            <input value={password} onChange={(e)=>{setEmpPass(e.target.value)}} className="form-control" name="password" id ="password" type="password"/>
                         </div>
                         <div className="form-group d-flex justify-content-between ">
-                            <button className="btn btn-success" formAction="" type="submit">Employee Login</button>
+                            <button className="btn btn-success" formAction="" type="submit" onClick={postData}>Employee Login</button>
                         </div>
                     </form>
                 </div>

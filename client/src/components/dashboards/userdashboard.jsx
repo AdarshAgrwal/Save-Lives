@@ -13,16 +13,20 @@ const Userdashboard = () => {
                 },
                 credentials:"include"
             })
-            //itna upar ka cheez likh kar the cookie will be passed from the front end to the backend and will be checked if database main
+
+            //itna upar ka cheez likh kar the cookie will be passed from the front end to the backend and we will check if database main
             //woh cookie token exist karti hai ki nahi and agar karta hai woh woh pura ka pura user ka data jiske liye woh cookie exists
-            //karta hai woh front end main ajayega and we can make use of that cookie data to shw stuff 
+            //karta hai woh front end main ajayega and we can make use of that cookie data to show stuff 
             
             const data = await res.json()
             console.log(data)
 
             //idhar data main sara data mil chuka hoga !!
 
-            if (!res.status === 200){throw new Error('unauthorized')} // throw new Error (res.error)
+            if (res.status !== 200){
+                throw new Error(res.error)
+                 // throw new Error (res.error)
+            } 
             else{
                 console.log("We got the Data successfully from the cookie")
             }
@@ -36,7 +40,7 @@ const Userdashboard = () => {
     //we cannot use async function in our useEffect
     useEffect(()=>{
         callAboutPage()
-    },[])
+    })
 
     return (
         <>

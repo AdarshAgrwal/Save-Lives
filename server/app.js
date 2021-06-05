@@ -22,3 +22,7 @@ app.listen(port, (success, err)=>{
         console.log(`Server is running on ${port}`)
     }
 })
+
+//User Dashboard - details to be displayed, tables of last donation and request blood , card for donation and request
+//aadhaar card file processing backend
+//employee dashboard - chart/graph of sales (chart.js), authorization of requests (table-responsive), details side main.

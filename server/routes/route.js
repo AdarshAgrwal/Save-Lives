@@ -6,7 +6,7 @@ const Employee = require('../schema/employeeschema')
 const Contact = require('../schema/contactUs')
 
 //acquiring middlewares
-const authenticate = require('../middleware/authenticate')
+const {authenticate , empauthenticate} = require('../middleware/authenticate')
 
 const router = express.Router()
 
@@ -42,6 +42,10 @@ router.get('/emplogin',(req,res)=>{
 
 router.get('/userdashboard',authenticate,(req,res)=>{
     res.send(req.user) //this req.user is being defined in out authenticate 
+})
+
+router.get('/empdashboard',empauthenticate, (req,res)=>{
+    console.log("This is the emp Dashboard page")
 })
 
 //POST REQUESTS
@@ -170,7 +174,7 @@ router.post('/userlogin', async (req,res)=>{
         if(userExists){
             const isMatch = await bcrypt.compare(password,userExists.password)
 
-            const token = await userExists.generateAuthToken()
+            const token = await userExists.generateAuthToken( )
             console.log(token)
 
             //Storing the token in the cookie 
@@ -202,6 +206,7 @@ router.post('/userlogin', async (req,res)=>{
 //Handling Employee Login 
 router.post('/emplogin', async (req,res)=>{
     const {email,password}=req.body
+    console.log(email,password)
 
     if(!email || !password) {
         console.log("Please fill all fields")
